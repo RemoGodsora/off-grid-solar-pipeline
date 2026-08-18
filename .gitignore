@@ -1,0 +1,38 @@
+# GCP Service Account Keys & Secrets
+*.json
+*.env
+*.pem
+*.key
+service_account.json
+gcp_keys.json
+
+# Local Python & OS artifacts
+__pycache__/
+*.pyc
+.venv/
+venv/
+.DS_Store
+
+# State & Payloads
+*.parquet
+*.csv
+mage_data/
+logs/
+.dbt/
+target/
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Security Badges
+keys.json
+*.env
+
+# Local Environments
+venv/
+__pycache__/
+.mage_data/
+
+# Compiled Software Logs
+target/
+dbt_packages/

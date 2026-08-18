@@ -1,0 +1,17 @@
+solar_analytics:
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      
+      # The internal Docker path to your Terraform security badge
+      keyfile: /home/src/infrastructure/keys.json
+      
+      project: de-zoomcamp-2026-502910
+      dataset: solar_analytics
+      location: us-central1
+      threads: 1
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      priority: interactive
+  target: dev
