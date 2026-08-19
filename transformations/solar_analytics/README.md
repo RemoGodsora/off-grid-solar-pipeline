@@ -1,3 +1,8 @@
+## System Telemetry Monitor
+Below is the live Looker Studio dashboard connected to the BigQuery data warehouse, monitoring the daily AC power aggregations and hardware faults of the simulated off-grid solar array.
+
+![Off-Grid Solar Telemetry Dashboard](dashboard.png)
+
 Welcome to your new dbt project!
 
 ### Using the starter project
