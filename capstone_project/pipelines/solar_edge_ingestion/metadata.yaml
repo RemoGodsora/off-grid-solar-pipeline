@@ -50,7 +50,7 @@ blocks:
   uuid: trigger_dbt_inverter
 cache_block_output_in_memory: false
 callbacks:
-- all_upstream_blocks_executed: true
+- all_upstream_blocks_executed: false
   color: null
   configuration: {}
   downstream_blocks: []
@@ -63,7 +63,10 @@ callbacks:
   status: not_executed
   timeout: null
   type: callback
-  upstream_blocks: []
+  upstream_blocks:
+  - read_edge_buffer
+  - bigquery_uplink
+  - trigger_dbt_inverter
   uuid: failure_callback
 concurrency_config: {}
 conditionals: []

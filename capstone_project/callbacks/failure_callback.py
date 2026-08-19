@@ -1,21 +1,27 @@
 import requests
 
-if 'failure_callback' not in globals():
-    from mage_ai.data_preparation.decorators import failure_callback
+# 1. The Fix: Import the unified callback router
+if 'callback' not in globals():
+    from mage_ai.data_preparation.decorators import callback
 
-@failure_callback
-def alert_discord(kwargs, **kwargs_extra):
+# 2. Tell the router to only fire on a 'failure' state
+@callback('failure')
+def alert_discord(parent_block_data, **kwargs):
     """
-    Fires a REST POST payload to Discord if the pipeline trips a breaker.
+    Fires a REST POST payload to Discord and logs the HTTP response.
     """
-    # Replace with your actual Discord Webhook URL
-    webhook_url = "https://discord.com/api/webhooks/1539475901975101570/lGTpOPk6ybiAC2w_qHSfEVlkFIqCOhdF6xhVig5JDHhIs3tzNOJ4j_bRL4SraPXJGbfd"
+    webhook_url = "https://discord.com/api/webhooks/1539475901975101570/lGTpOPk6ybiAC2w_qHSfEVlkFIqCOhdF6xhVig5JDHhIs3tzNOJ4j_bRL4SraPXJGbfd" # Ensure this is your actual URL
     
     payload = {
-        "content": "🚨 **CRITICAL FAULT**: The Solar Telemetry Pipeline just tripped a breaker. Check the Mage orchestrator logs immediately."
+        "content": "🚨 **CRITICAL FAULT**: The Telemetry Pipeline just tripped a breaker."
     }
     
-    # Fire the telemetry alert
-    requests.post(webhook_url, json=payload)
+    # Fire the telemetry alert and capture the response
+    response = requests.post(webhook_url, json=payload)
     
-    print("Telemetry alert successfully transmitted to Discord.")
+    # Read the diagnostic output
+    print(f"Discord API Status Code: {response.status_code}")
+    if response.status_code == 204:
+        print("SUCCESS: Telemetry alert successfully transmitted to Discord.")
+    else:
+        print(f"FAULT: Discord rejected the payload. Reason: {response.text}")
