@@ -11,19 +11,19 @@ with staging as (
 
 daily_summary as (
     select
-        device_id,
-        cast(ping_timestamp as date) as ping_date,
+        array_id,
+        cast(recorded_at as date) as ping_date,
         
         -- Aggregate network health
         count(*) as total_pings,
         
         -- Aggregate electrical metrics
-        round(avg(bus_voltage_v), 2) as avg_bus_voltage,
+        round(avg(pv_voltage_dc), 2) as avg_bus_voltage,
         round(avg(line_current_a), 2) as avg_line_current,
-        round(max(ambient_temp_c), 2) as peak_temp_c,
+        round(max(inverter_temp_celsius), 2) as peak_temp_c,
         
         -- Sum up hardware faults
-        sum(case when is_voltage_dropout then 1 else 0 end) as voltage_dropouts
+        sum(case when pv_voltage_dc <= 0.0 then 1 else 0 end) as voltage_dropouts
 
     from staging
     group by 1, 2
