@@ -1,12 +1,3 @@
-## Certifications
-* **[dbt Fundamentals Certification](https://credentials.getdbt.com/a3c1b121-55d5-4acb-91f6-425e37ec5bfa)** - Issued by dbt Labs
-*This project utilizes dbt best practices (modular SQL, version control, and testing) validated by the official dbt Fundamentals credential.*
-
-## System Telemetry Monitor
-Below is the live Looker Studio dashboard connected to the BigQuery data warehouse, monitoring the daily AC power aggregations and hardware faults of the simulated off-grid solar array.
-
-![Off-Grid Solar Telemetry Dashboard](dashboard.png)
-
 Welcome to your new dbt project!
 
 ### Using the starter project

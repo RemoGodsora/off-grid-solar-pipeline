@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_telemetry_events
+    description: "Cleaned and typed staging layer for edge telemetry."
+    columns:
+      - name: array_id
+        description: "Unique identifier for the solar array."
+        tests:
+          - not_null
+      - name: recorded_at
+        description: "Timestamp when the telemetry was recorded."
+        tests:
+          - not_null
+      - name: pv_voltage_dc
+        description: "DC voltage measurement."
+        tests:
+          - not_null
