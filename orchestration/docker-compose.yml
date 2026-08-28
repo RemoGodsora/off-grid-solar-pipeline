@@ -1,18 +1,14 @@
-version: '3'
 services:
   magic-workspace:
     image: mageai/mageai:latest
     command: mage start capstone_project
     env_file:
       - .env
-    build:
-      context: .
-      dockerfile: Dockerfile
     environment:
       USER_CODE_PATH: /home/src/capstone_project
     ports:
       - 6789:6789
     volumes:
-      # This mounts your entire Capstone folder into the container
+      # Mounts your entire master Capstone folder into the container
       - ../:/home/src/
     restart: on-failure:5

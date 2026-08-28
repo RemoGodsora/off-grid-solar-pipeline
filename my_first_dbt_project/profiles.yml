@@ -1,14 +1,14 @@
 my_first_dbt_project:
   outputs:
     dev:
+      type: bigquery
+      method: service-account
+      keyfile: /home/src/infrastructure/keys.json
+      project: de-zoomcamp-2026-502910
       dataset: dbt_dev
+      location: US
+      threads: 4
       job_execution_timeout_seconds: 300
       job_retries: 1
-      keyfile: D:/Project_files/Data_Engineering_Capstone/infrastructure/keys.json
-      location: US
-      method: service-account
       priority: interactive
-      project: de-zoomcamp-2026-502910
-      threads: 4
-      type: bigquery
   target: dev
