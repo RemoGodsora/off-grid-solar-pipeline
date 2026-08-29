@@ -6,6 +6,16 @@
 service_account.json
 gcp_keys.json
 
+# GCP Authentication
+*.json
+keys/
+gcp_keys.json
+
+# Environment Variables
+*.env
+.env
+__pycache__/
+
 # Local Python & OS artifacts
 __pycache__/
 *.pyc

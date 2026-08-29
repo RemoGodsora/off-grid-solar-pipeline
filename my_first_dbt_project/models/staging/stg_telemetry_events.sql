@@ -5,20 +5,21 @@
 }}
 
 with raw_source as (
-    -- This pulls from the physical cloud database, breaking the loop
     select * from {{ source('raw_feed', 'raw_telemetry') }}
 ),
 
 sanitized as (
     select
-        cast(device_id as int64) as array_id,
-        cast(ping_timestamp as timestamp) as recorded_at,
-        
-        coalesce(cast(bus_voltage as float64), 0.0) as pv_voltage_dc,
-        coalesce(cast(line_current as float64), 0.0) as line_current_a,
-        coalesce(cast(ambient_temp as float64), 25.0) as inverter_temp_celsius
-
+        -- 🛠️ THE FIX: Read the physical 'device_id' pin and output it as 'array_id'
+        SAFE_CAST(device_id as string) as array_id,
+        SAFE_CAST(timestamp as timestamp) as recorded_at,
+        SAFE_CAST(voltage as float64) as pv_voltage_dc,
+        -- Escape the reserved 'current' keyword with backticks
+        SAFE_CAST(`current` as float64) as pv_current_amps
     from raw_source
+    -- Explicitly drop the header row and corrupted payloads using the raw column name
+    where device_id is not null 
+      and device_id != 'device_id'
 )
 
 select * from sanitized

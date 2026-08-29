@@ -2,12 +2,13 @@ version: 2
 
 sources:
   - name: raw_feed
-    database: de-zoomcamp-2026-502910  # Replace with your actual GCP Project ID if different
-    schema: dbt_dev                    # Use the schema where your raw data actually lives
+    database: de-zoomcamp-2026-502910
+    # Route the intake to the Terraform-provisioned dataset in us-central1
+    schema: solar_telemetry_raw 
     tables:
       - name: raw_telemetry
         config:
-          loaded_at_field: ping_timestamp # The column dbt checks for timestamps
+          loaded_at_field: recorded_at
           freshness:
             warn_after: {count: 12, period: hour}
             error_after: {count: 24, period: hour}

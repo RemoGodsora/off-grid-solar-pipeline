@@ -1,21 +1,20 @@
-# Off-Grid Solar Telemetry Data Lake
+# Autonomous IoT Solar Telemetry Pipeline
 
-## Architecture Overview
-This repository contains a production-grade, end-to-end ELT data pipeline simulating an off-grid solar array network. It extracts high-frequency edge telemetry, loads it into a cloud data warehouse, and transforms it into aggregated hardware health metrics.
+## System Architecture
+An end-to-end Extract, Load, and Transform (ELT) pipeline designed to ingest, buffer, and analyze simulated edge hardware telemetry. 
 
-## The Tech Stack
-* **Infrastructure as Code:** Terraform
-* **Data Ingestion:** Python (Edge Simulator)
-* **Data Warehouse:** Google BigQuery
-* **Data Transformation:** dbt (Data Build Tool)
-* **Orchestration:** Mage AI
-* **Event Streaming (Future Phase):** Apache Kafka & PySpark
+* **Edge/Streaming Buffer:** Python Edge Simulator -> Apache Kafka
+* **Orchestration & Compute:** Mage.ai (Containerized via Docker)
+* **Storage & Data Warehouse:** Google BigQuery (Provisioned via Terraform)
+* **Transformations & Analytics:** dbt (Data Build Tool)
+* **System Telemetry & Alerting:** Discord Webhooks
 
-## Execution Roadmap
-* [x] **Phase 1: Cloud Infrastructure & Storage** (Provisioned BigQuery via Terraform)
-* [x] **Phase 2: Analytics Engineering** (Built modular AC/DC aggregation models in dbt)
-* [ ] **Phase 3: Orchestration** (Automating the DAG in Mage)
-* [ ] **Phase 4: Distributed Compute** (Kafka/PySpark integration)
+## Execution Instructions
+1. Clone the repository to your local compute environment.
+2. Provision a Google Cloud Service Account with BigQuery Admin privileges. Save the credential file as `gcp_keys.json` in the root directory.
+3. Initialize the orchestrator: `docker-compose up -d`
+4. Ignite the edge simulator to begin the Kafka telemetry stream: `python solar_simulator.py`
+5. Navigate to `localhost:6789` to monitor the pipeline DAG and autonomous dbt compilations.
 
 ## Certifications
 * **[dbt Fundamentals Certification](https://credentials.getdbt.com/a3c1b121-55d5-4acb-91f6-425e37ec5bfa)** - Issued by dbt Labs

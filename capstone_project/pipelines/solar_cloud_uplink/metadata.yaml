@@ -36,7 +36,7 @@ blocks:
   upstream_blocks:
   - read_edge_buffer_v2
   uuid: bigquery_uplink_v2
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: teal
   configuration: {}
   downstream_blocks: []

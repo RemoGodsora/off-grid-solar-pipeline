@@ -1,0 +1,23 @@
+services:
+  kafka:
+    # Hard-locking to a stable Confluent release to avoid registry supply-chain drops
+    image: confluentinc/confluent-local:7.6.0
+    container_name: kafka_broker
+    ports:
+      # Exposing the main TCP port for our Python scripts to stream data into
+      - "9092:9092"
+    environment:
+      # A strict 16-byte base64 UUID (exactly 22 characters) required by modern KRaft architecture
+      CLUSTER_ID: 'QTc2MzcyMjg3MTRhNDI0OA'
+
+  streaming_db:
+    # The dedicated battery bank for your real-time data
+    image: postgres:14
+    container_name: streaming_db
+    ports:
+      # Hosted on port 5433 to avoid colliding with your Mage orchestration database
+      - "5433:5432" 
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=telemetry

@@ -5,7 +5,6 @@
 }}
 
 with staging as (
-    -- Dynamically read from the tested staging layer
     select * from {{ ref('stg_telemetry_events') }}
 ),
 
@@ -19,8 +18,7 @@ daily_summary as (
         
         -- Aggregate electrical metrics
         round(avg(pv_voltage_dc), 2) as avg_bus_voltage,
-        round(avg(line_current_a), 2) as avg_line_current,
-        round(max(inverter_temp_celsius), 2) as peak_temp_c,
+        round(avg(pv_current_amps), 2) as avg_line_current,
         
         -- Sum up hardware faults
         sum(case when pv_voltage_dc <= 0.0 then 1 else 0 end) as voltage_dropouts
