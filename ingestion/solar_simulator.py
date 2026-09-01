@@ -1,48 +1,39 @@
 import json
 import random
-import time
-from datetime import datetime, timezone
+from datetime import datetime, timedelta
 
-def generate_telemetry(num_records=100):
-    """Simulates real-world electrical telemetry from an off-grid solar array."""
+def generate_historical_telemetry(num_records=500):
+    """Simulates 7 days of electrical telemetry with injected hardware faults."""
     payloads = []
     
-    for _ in range(num_records):
-        # Base physical parameters
-        device_id = f"array_{random.randint(1, 50):02d}"
-        timestamp = datetime.now(timezone.utc).isoformat()
+    # Loop backwards to simulate historical hardware operation
+    for i in range(num_records):
+        # Stagger the timestamps across the last 7 days
+        simulated_time = datetime.now() - timedelta(minutes=(i * 20))
         
-        # Simulate realistic electrical physics
-        is_faulting = random.random() < 0.05  # 5% chance of an anomaly
-        
-        if is_faulting:
-            voltage = round(random.uniform(35.0, 42.0), 2)     # Voltage drop
-            current = round(random.uniform(15.0, 25.0), 2)     # High load spike
-            temperature = round(random.uniform(85.0, 105.0), 2) # Overheating
-            battery_soc = round(random.uniform(20.0, 40.0), 2) # Low battery
+        # Inject a hardware fault (0.0V) approx 10% of the time to test BMS alerts
+        if random.random() < 0.10:
+            pv_voltage = 0.0
+            pv_current = 0.0
         else:
-            voltage = round(random.uniform(47.5, 48.5), 2)     # Stable 48V system
-            current = round(random.uniform(5.0, 12.0), 2)      # Normal load
-            temperature = round(random.uniform(35.0, 55.0), 2) # Safe operating temp
-            battery_soc = round(random.uniform(80.0, 100.0), 2)# Healthy battery
+            pv_voltage = round(random.uniform(30.0, 45.0), 2)
+            pv_current = round(random.uniform(5.0, 15.0), 2)
             
+        # Build the payload to match your raw BigQuery intake pins exactly
         payloads.append({
-            "device_id": device_id,
-            "timestamp": timestamp,
-            "voltage": voltage,
-            "current": current,
-            "inverter_temp_c": temperature,
-            "battery_soc_pct": battery_soc,
-            "is_faulting": is_faulting
+            "device_id": f"array_{random.randint(1, 5):02d}", # Creates array_01 through array_05
+            "timestamp": simulated_time.strftime("%Y-%m-%d %H:%M:%S"),
+            "voltage": pv_voltage,
+            "current": pv_current
         })
         
     return payloads
 
 if __name__ == "__main__":
-    print("Initializing Edge Sensor Array...")
-    data = generate_telemetry(500) # Generate 500 telemetry pings
+    print("Initializing Edge Sensor Array (Historical & Fault Injection Mode)...")
+    data = generate_historical_telemetry(500)
     
-    # Dump to a local buffer file (simulating edge storage)
+    # Dump to the local buffer file that Mage reads from
     output_file = "raw_telemetry_buffer.json"
     with open(output_file, 'w') as f:
         json.dump(data, f, indent=4)
