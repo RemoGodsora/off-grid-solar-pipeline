@@ -87,8 +87,8 @@ default:
   POSTGRES_SCHEMA: public # Optional
   POSTGRES_USER: admin
   POSTGRES_PASSWORD: admin
-  POSTGRES_HOST: host.docker.internal
-  POSTGRES_PORT: 5433
+  POSTGRES_HOST: streaming_db
+  POSTGRES_PORT: 5432
   # Qdrant
   QDRANT_COLLECTION: collection
   QDRANT_PATH: path
