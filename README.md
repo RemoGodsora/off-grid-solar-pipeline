@@ -110,30 +110,34 @@ cd off-grid-solar-pipeline
 ```
 
 # Configure local and cloud connections from sanitized template
-```cp capstone_project/io_config.yaml.example capstone_project/io_config.yaml
+```bash
+cp capstone_project/io_config.yaml.example capstone_project/io_config.yaml
 ```
 
 ##2. Launch Local Infrastructure
 Start the Kafka broker, Zookeeper, and PostgreSQL containers:
 
-Bash
-```docker compose up -d
+```bash
+docker compose up -d
 ```
 Initialize the Mage AI orchestrator:
 
-Bash
-```cd orchestration
+```bash
+cd orchestration
 docker compose up -d
-cd ..```
+cd ..
+```
 ##3. Run Edge Streaming & Distributed Compute
 Start the edge hardware telemetry producer:
 
-Bash
-```python kafka-streaming/solar_simulator.py```
+```bash
+python kafka-streaming/solar_simulator.py
+```
 Submit the streaming PySpark job in a separate terminal:
 
-Bash
-```python kafka-streaming/spark_processor.py```
+```bash
+python kafka-streaming/spark_processor.py
+```
 ##4. Monitor Pipelines & Trigger Cloud Sync
 Grafana SCADA Dashboard: Access http://localhost:3000 to monitor live time-series voltage fluctuations.
 
