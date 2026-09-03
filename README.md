@@ -32,25 +32,6 @@ flowchart TD
 
 
 
-### Option 2: Copy-Paste Layout for Excalidraw / Draw.io
-
-If you prefer an image file (`docs/architecture.png`) matching your previous canvas, arrange your blocks following this mapping:
-
-| Layer | Node Label | Subtitle / Technology | Directed Arrows To |
-| :--- | :--- | :--- | :--- |
-| **1. Edge** | **Edge Simulator** | `Python (High-Frequency Telemetry)` | ──► **Message Broker** |
-| **2. Broker** | **Message Broker** | `Apache Kafka (solar_telemetry)` | ──► **Distributed Compute** |
-| **3. Compute** | **Distributed Compute** | `PySpark (In-Memory Anomaly Filter)` | ──► **Relational Store** |
-| **4. Storage** | **Operational Store** | `PostgreSQL (Bronze Layer)` | ──► **SCADA Monitor**<br/>──► **Orchestration** |
-| **5. Orchestrator**| **Orchestration** | `Mage AI (DAG: Power & Severity)` | ──► **Cloud Warehouse** |
-| **6. Cloud Sink** | **Cloud Warehouse** | `Snowflake (Gold Layer: SOLAR_TELEMETRY)` | *(Terminal Node)* |
-| **7. Monitor** | **SCADA Dashboard** | `Grafana (Real-Time Inverter Metrics)` | *(Terminal Node)* |
-
-Export the canvas as `docs/architecture.png`, stage it with `git add docs/architecture.png`, and push.
-
-
-
-
 
 
 
