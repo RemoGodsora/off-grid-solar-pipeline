@@ -142,3 +142,22 @@ python kafka-streaming/spark_processor.py
 Grafana SCADA Dashboard: Access http://localhost:3000 to monitor live time-series voltage fluctuations.
 
 Mage AI Orchestrator: Access http://localhost:6789 to monitor DAG execution and trigger the cloud export to Snowflake.
+
+### 5. In-Warehouse Transformation & Data Quality (dbt)
+The analytical layer transforms raw ingestion data into production-ready dimensional marts inside Snowflake:
+
+```bash
+cd transformations/solar_analytics
+
+# Copy sanitized profile template and populate Snowflake credentials
+cp profiles.yml.example profiles.yml
+
+# Execute transformations and data quality test suite
+dbt run
+dbt test
+```
+- **Staging** (stg_solar_telemetry): Enforces strict typing, normalizes timestamps (to_timestamp_ntz), and handles column quoting for warehouse compatibility.
+
+- **Fact Mart** (fct_hardware_faults): Calculates 5-event rolling voltage averages (avg() over (partition by ...)), assigns severity ranks, and flags critical threshold breaches (is_critical_overvoltage).
+
+- **Automated Data Quality:** Enforces not_null assertions and accepted_values domain constraints across primary keys and analytical flags.
