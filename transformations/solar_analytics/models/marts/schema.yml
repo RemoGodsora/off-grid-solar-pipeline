@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: fct_hardware_faults
+    description: "Dimensional fact table tracking IoT solar voltage anomalies and running rolling averages."
+    columns:
+      - name: sensor_id
+        description: "Primary identifier of the transmitting sensor."
+        tests:
+          - not_null
+      - name: event_recorded_at
+        description: "Normalized timestamp of the telemetry event."
+        tests:
+          - not_null
+      - name: is_critical_overvoltage
+        description: "Boolean flag set to true when voltage >= 52.0V."
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [true, false]

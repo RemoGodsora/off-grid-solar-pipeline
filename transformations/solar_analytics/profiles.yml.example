@@ -1,0 +1,14 @@
+solar_analytics:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: <YOUR_SNOWFLAKE_ACCOUNT_LOCATOR>
+      user: <YOUR_SNOWFLAKE_USERNAME>
+      password: "<YOUR_SNOWFLAKE_PASSWORD>"
+      role: ACCOUNTADMIN
+      database: SOLAR_TELEMETRY
+      warehouse: TELEMETRY_WH
+      schema: ANALYTICS
+      threads: 4
+      client_session_keep_alive: False

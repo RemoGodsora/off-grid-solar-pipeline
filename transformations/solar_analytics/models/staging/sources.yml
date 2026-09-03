@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: solar_raw
+    database: SOLAR_TELEMETRY
+    schema: GOLD
+    tables:
+      - name: ENRICHED_ANOMALIES
+        description: "Raw enriched IoT solar anomaly events ingested by Mage AI."
+        columns:
+          - name: sensor_id
+            quote: true
+            description: "Identifier for the edge telemetry sensor."
+            tests:
+              - not_null
+          - name: timestamp
+            quote: true
+            description: "Epoch timestamp of the recorded anomaly."
+            tests:
+              - not_null
