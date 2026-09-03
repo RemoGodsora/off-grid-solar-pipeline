@@ -36,7 +36,7 @@ Designed to operate under edge infrastructure constraints (such as intermittent 
                                       │
                                       ▼ (TLS Egress / Idempotent Write)
                            [Snowflake Gold Warehouse]
-
+```
 
 1. **Edge Simulator (`kafka-streaming/`)**: Transmits high-frequency solar telemetry (voltage, current, temperature, and Unix epoch timestamps) to Apache Kafka topic `solar_telemetry`.
 2. **Distributed Stream Filtering (PySpark)**: Reads streaming micro-batches, validates JSON schema typing, and isolates critical hardware anomalies (voltage exceeding 50.0V baseline) entirely in distributed memory.
@@ -106,7 +106,7 @@ Clone the repository and copy the environment configuration template:
 
 ```bash
 git clone [https://github.com/RemoGodsora/off-grid-solar-pipeline.git](https://github.com/RemoGodsora/off-grid-solar-pipeline.git)
-cd off-grid-solar-pipeline
+cd off-grid-solar-pipeline```
 
 # Configure local and cloud connections from sanitized template
 cp capstone_project/io_config.yaml.example capstone_project/io_config.yaml
@@ -115,22 +115,22 @@ cp capstone_project/io_config.yaml.example capstone_project/io_config.yaml
 Start the Kafka broker, Zookeeper, and PostgreSQL containers:
 
 Bash
-docker compose up -d
+```docker compose up -d```
 Initialize the Mage AI orchestrator:
 
 Bash
-cd orchestration
+```cd orchestration
 docker compose up -d
-cd ..
+cd ..```
 ##3. Run Edge Streaming & Distributed Compute
 Start the edge hardware telemetry producer:
 
 Bash
-python kafka-streaming/solar_simulator.py
+```python kafka-streaming/solar_simulator.py```
 Submit the streaming PySpark job in a separate terminal:
 
 Bash
-python kafka-streaming/spark_processor.py
+```python kafka-streaming/spark_processor.py```
 ##4. Monitor Pipelines & Trigger Cloud Sync
 Grafana SCADA Dashboard: Access http://localhost:3000 to monitor live time-series voltage fluctuations.
 
