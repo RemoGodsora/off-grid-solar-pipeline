@@ -46,3 +46,14 @@ __pycache__/
 # Compiled Software Logs
 target/
 dbt_packages/
+
+# Mage Credentials
+capstone_project/io_config.yaml
+**/io_config.yaml
+
+# PySpark Runtime Artifacts & Stream Offsets
+kafka-streaming/spark_checkpoints/
+kafka-streaming/spark_temp/
+**/spark_checkpoints/
+**/spark_temp/
+*.crc

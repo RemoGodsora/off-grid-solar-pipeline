@@ -1,0 +1,19 @@
+version: 0.1.1
+default:
+  # Local PostgreSQL Sink (Docker Grid)
+  POSTGRES_CONNECT_TIMEOUT: 10
+  POSTGRES_DBNAME: telemetry
+  POSTGRES_SCHEMA: public
+  POSTGRES_USER: admin
+  POSTGRES_PASSWORD: your_postgres_password
+  POSTGRES_HOST: streaming_db
+  POSTGRES_PORT: 5432
+
+  # Snowflake Cloud Uplink (Production Gold Layer)
+  SNOWFLAKE_USER: your_snowflake_username
+  SNOWFLAKE_PASSWORD: your_snowflake_password
+  SNOWFLAKE_ACCOUNT: your_account_identifier.region.cloud
+  SNOWFLAKE_DEFAULT_WH: TELEMETRY_WH
+  SNOWFLAKE_DEFAULT_DB: SOLAR_TELEMETRY
+  SNOWFLAKE_DEFAULT_SCHEMA: GOLD
+  SNOWFLAKE_ROLE: ACCOUNTADMIN
