@@ -1,3 +1,60 @@
+```mermaid
+flowchart TD
+    subgraph Edge["Edge Layer"]
+        A["Edge Telemetry Simulator<br/><code>Python (IoT Telemetry)</code>"]
+    end
+
+    subgraph Streaming["Real-Time Streaming & Compute"]
+        B["Message Broker<br/><code>Apache Kafka (solar_telemetry)</code>"]
+        C["Distributed Compute<br/><code>PySpark (In-Memory Filter > 50V)</code>"]
+    end
+
+    subgraph Storage["Storage & Orchestration"]
+        D[("Operational Store (Bronze)<br/><code>PostgreSQL Container</code>")]
+        E["Orchestration Engine<br/><code>Mage AI (Enrichment DAG)</code>"]
+        F[("Cloud Data Warehouse (Gold)<br/><code>Snowflake (TELEMETRY_WH)</code>")]
+    end
+
+    subgraph Observability["Monitoring"]
+        G["SCADA Dashboard<br/><code>Grafana (Time-Series Metrics)</code>"]
+    end
+
+    A -->|Raw Stream| B
+    B -->|Micro-Batch| C
+    C -->|Persist Anomaly| D
+    D -->|Real-Time Telemetry| G
+    D -->|Batch Extraction| E
+    E -->|TLS Egress / Idempotent Write| F
+
+    classDef default fill:#1e1e24,stroke:#4f46e5,stroke-width:2px,color:#fff;
+    classDef cloud fill:#0284c7,stroke:#38bdf8,stroke-width:2px,color:#fff;
+    class F cloud;
+
+
+
+### Option 2: Copy-Paste Layout for Excalidraw / Draw.io
+
+If you prefer an image file (`docs/architecture.png`) matching your previous canvas, arrange your blocks following this mapping:
+
+| Layer | Node Label | Subtitle / Technology | Directed Arrows To |
+| :--- | :--- | :--- | :--- |
+| **1. Edge** | **Edge Simulator** | `Python (High-Frequency Telemetry)` | ──► **Message Broker** |
+| **2. Broker** | **Message Broker** | `Apache Kafka (solar_telemetry)` | ──► **Distributed Compute** |
+| **3. Compute** | **Distributed Compute** | `PySpark (In-Memory Anomaly Filter)` | ──► **Relational Store** |
+| **4. Storage** | **Operational Store** | `PostgreSQL (Bronze Layer)` | ──► **SCADA Monitor**<br/>──► **Orchestration** |
+| **5. Orchestrator**| **Orchestration** | `Mage AI (DAG: Power & Severity)` | ──► **Cloud Warehouse** |
+| **6. Cloud Sink** | **Cloud Warehouse** | `Snowflake (Gold Layer: SOLAR_TELEMETRY)` | *(Terminal Node)* |
+| **7. Monitor** | **SCADA Dashboard** | `Grafana (Real-Time Inverter Metrics)` | *(Terminal Node)* |
+
+Export the canvas as `docs/architecture.png`, stage it with `git add docs/architecture.png`, and push.
+
+
+
+
+
+
+
+
 # Autonomous IoT Solar Telemetry Pipeline
 
 ## System Architecture
