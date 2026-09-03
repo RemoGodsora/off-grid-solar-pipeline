@@ -96,8 +96,8 @@ SELECT
     severity_rank
 FROM TelemetryMetrics
 WHERE severity_rank <= 3
-ORDER BY "sensor_id", severity_rank;```
-
+ORDER BY "sensor_id", severity_rank;
+```
 
 ## Local Execution Instructions
 
@@ -106,16 +106,19 @@ Clone the repository and copy the environment configuration template:
 
 ```bash
 git clone [https://github.com/RemoGodsora/off-grid-solar-pipeline.git](https://github.com/RemoGodsora/off-grid-solar-pipeline.git)
-cd off-grid-solar-pipeline```
+cd off-grid-solar-pipeline
+```
 
 # Configure local and cloud connections from sanitized template
-cp capstone_project/io_config.yaml.example capstone_project/io_config.yaml
+```cp capstone_project/io_config.yaml.example capstone_project/io_config.yaml
+```
 
 ##2. Launch Local Infrastructure
 Start the Kafka broker, Zookeeper, and PostgreSQL containers:
 
 Bash
-```docker compose up -d```
+```docker compose up -d
+```
 Initialize the Mage AI orchestrator:
 
 Bash
