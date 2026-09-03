@@ -96,7 +96,7 @@ SELECT
     severity_rank
 FROM TelemetryMetrics
 WHERE severity_rank <= 3
-ORDER BY "sensor_id", severity_rank;
+ORDER BY "sensor_id", severity_rank;```
 
 
 ## Local Execution Instructions
